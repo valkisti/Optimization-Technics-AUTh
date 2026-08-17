@@ -1,2 +1,2 @@
 # Optimization-Technics-AUTh
-Optimization Technics Exercises 
+Εργασίες για τις Τεχνικές Βελτιστοποίησης 2023
