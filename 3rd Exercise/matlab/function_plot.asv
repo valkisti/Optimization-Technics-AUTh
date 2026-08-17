@@ -1,0 +1,34 @@
+syms x1 x2;
+f = @(x1, x2) (1/3)*(x1^2) + 3*(x2^2);                          % Ορίσμός της συνάρτησης 
+
+[x1, x2] = meshgrid(-5:0.1:5, -5:0.1:5);                                
+
+z = f(x1, x2);
+xlim([-15, 10]);
+ylim([-10, 15]);
+
+figure;                                                        % Φτιάχνει ενα 3D διάγραμμα της συνάρτησης 
+%subplot(1,2,1)
+%surf(x1, x2, z);
+fsurf(f,[-15 15],'ShowContours','on');
+xlabel('X1-axis');
+ylabel('X2-axis');
+zlabel('Z-axis');
+title(' 3D διάγραμμα της f = (1/3)*(x1^2) + 3*(x2^2)');
+
+
+
+%subplot(1,2,2)                                                % Και φτιάχνει και τις ισουψείς καμπύλες της
+x1_min = -10;
+x1_max = 5;
+x2_min = -8;
+x2_max = 12;
+
+figure;
+fcontour(f,[-15, 10, -10, 15]);
+grid on;
+title('Ισοϋψείς καμπύλες της f = (1/3)*(x1^2) + 3*(x2^2)');
+xlabel('x1');
+ylabel('x2');
+r = rectangle('position',[x1_min, x2_min, x1_max - x1_min, x2_max - x2_min],  'linestyle', '-', 'edgecolor', 'r',...
+    'linewidth', 1.5);

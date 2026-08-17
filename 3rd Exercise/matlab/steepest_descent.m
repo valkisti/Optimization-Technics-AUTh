@@ -1,0 +1,30 @@
+function [k,d, x1, x2] = steepest_descent(f, x1_0, x2_0,e, g)
+    syms x1 x2;
+
+    df_dx = diff(f, x1);                                    %υπολογισμός των παραγώγων
+    df_dy = diff(f, x2);
+    grad_f = @(x_val, y_val) [double(subs(df_dx, [x1, x2], [x_val, y_val])); double(subs(df_dy, [x1, x2], [x_val, y_val]))];     %υπολογισμός του gradient
+    
+    x1 = [];              %ορίζω το x και y ως πίνακες και θέτω τα πρώτα στοιχεία του ίσα με τις αρχικές τιμές x_0, y_0
+    x2 = [];
+    x1 = x1_0;
+    x2 = x2_0;
+    max_k = 500;         %ορίζω μέγιστο αριθμό επαναλήψεων
+    k = 1 ;              %και ξεκινάω απο το 1
+
+    while k <= max_k
+
+        grad_val = grad_f(x1(k), x2(k));      % ορίζω την μεταβλητή grad_val και της θέτω την τιμή του gradient για συγκεκριμένα χ και y
+
+        if norm(grad_val) < e              % αν το gradient είναι μικρότερο από το e τότε τερματίζει η μέθοδος
+            break; 
+        end
+
+        d = - grad_val;                    % υπολογίζω το  d από τον τύπο του βιβλίου
+        x1(k+1) = x1(k) - g * grad_val(1);
+        x2(k+1) = x2(k) - g * grad_val(2);
+
+        k = k + 1;
+    end
+    k = k-1;                             % το k είναι ο αριθμός των επαναλήψεων και το επιστρέφει και η συνάρτηση
+end

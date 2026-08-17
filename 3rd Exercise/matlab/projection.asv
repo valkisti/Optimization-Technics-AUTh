@@ -1,0 +1,11 @@
+function [proj] = projection(xi,a, b)
+    
+    if xi <= a
+        proj = a;
+    else if xi >= b
+        proj = b;
+    else
+        proj = xi;
+    end
+    
+end
