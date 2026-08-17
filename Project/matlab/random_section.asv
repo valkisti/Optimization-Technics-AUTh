@@ -1,0 +1,25 @@
+function selectedPop = random_section(population, numOfSelections)
+ 
+    % Function to randomly select a span inside our population for the crossover process.
+
+    % Generate random indices for selection
+    data = randi(size(population, 1), 1, numOfSelections);
+
+    % Select individuals based on the random indices
+    selectedPop = population(data, :);
+end
+function selectedIndices = rouletteWheelSelection(fitness_array, populationSize)
+    % Roulette Wheel Selection
+    fitnessProportions = fitness_array / sum(fitness_array);
+    cumulativeProportions = cumsum(fitnessProportions);
+
+    selectedIndices = zeros(populationSize, 1);
+
+    for i = 1:populationSize
+        % Randomly select a value
+        randValue = rand();
+
+        % Find the individual whose cumulative proportion exceeds the random value
+        selectedIndices(i) = find(cumulativeProportions >= randValue, 1, 'first');
+    end
+end

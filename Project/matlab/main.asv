@@ -1,0 +1,45 @@
+% main.m
+
+% Parameters
+populationSize = 150;
+geneSize = 15*5; % Adjust this based on the size of your genes
+generations = 1000;
+mutationRate = 0.03;
+elitePercentage = 0.3;
+diversityPercentage = 0.6;
+
+% Specify the number of runs
+numRuns = 10;
+
+% Initialize variables to store results
+averageFitness = zeros(numRuns, generations);
+averageIndividuals = zeros(numRuns, geneSize);
+
+% Run genetic algorithm multiple times
+for run = 1:numRuns
+    % Run genetic algorithm
+    [bestCand, bestError] = genetic_algorithm(populationSize, geneSize, generations, mutationRate, elitePercentage, diversityPercentage);
+
+    % Store results
+    averageFitness(run, :) = bestError;
+    averageIndividuals(run, :) = bestCand;
+end
+
+% Calculate the average
+meanFitness = mean(averageFitness);
+meanIndividual = mean(averageIndividuals);
+
+% Plot the average outcome
+plots(meanIndividual, geneSize, meanFitness);
+
+% Display Gaussian parameters
+
+gaussianNames = {'1st Gaussian'; '2nd Gaussian'; '3rd Gaussian'; '4th Gaussian'; ...
+    '5th Gaussian'; '6th Gaussian'; '7th Gaussian'; '8th Gaussian'; '9th Gaussian'; ...
+    '10th Gaussian'; '11th Gaussian'; '12th Gaussian'; '13th Gaussian'; ...
+    '14th Gaussian'; '15th Gaussian'};
+A = meanIndividual(1:5:end)';
+center1 = meanIndividual(2:5:end)'; center2 = meanIndividual(3:5:end)';
+sigma1 = meanIndividual(4:5:end)'; sigma2 = meanIndividual(5:5:end)';
+gaussiansTable = table(gaussianNames, A, center1, center2, sigma1, sigma2);
+disp(gaussiansTable);
